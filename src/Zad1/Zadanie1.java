@@ -111,10 +111,8 @@ class Methods{
         int factor = calculateFactor();
         for(int i=0;i<products.size();i++){
             if(isNumber.get(i)) factor-=products.get(i);
-            else{
-
-            }
         }
+
         System.out.println(factor);
     }
     public static int load(List<JTextField> list){

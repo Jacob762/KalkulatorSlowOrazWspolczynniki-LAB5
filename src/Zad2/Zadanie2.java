@@ -35,6 +35,7 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
     private boolean DMactivated = false;
     private int operators = 0;
     private boolean nextResult = false;
+    private boolean goOn;
     MyFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600,850);
@@ -111,9 +112,10 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
             nextResult = false;
         }
         JButton button = (JButton) e.getSource();
+        String buttonText = button.getText();
         int clickCounter = e.getClickCount()-1;
         System.out.println(clickCounter);
-        switch (clickCounter%button.getText().length()){
+        switch (clickCounter%buttonText.length()){
             case (0):
                 if(clickCounter>2){
                     StringBuilder stringBuilder;
@@ -122,19 +124,19 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
                     resultFieldText = stringBuilder.toString();
                 }
                 if(DMactivated){
-                    resultFieldText+=button.getText().toUpperCase().charAt(0);
+                    resultFieldText+=buttonText.toUpperCase().charAt(0);
                 }else{
-                    resultFieldText+=button.getText().charAt(0);
+                    resultFieldText+=buttonText.charAt(0);
                 }
                 break;
             case (1):
-                stringBuilder(1,button);
+                stringBuilder(1,buttonText);
                 break;
             case (2):
-                stringBuilder(2,button);
+                stringBuilder(2,buttonText);
                 break;
             case (3):
-                stringBuilder(3,button);
+                stringBuilder(3,buttonText);
                 break;
         }
         result.setText(resultFieldText);
@@ -158,6 +160,10 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(nextResult){
+            resultFieldText = "";
+            nextResult = false;
+        }
         if(resultFieldText.length()!=0){
             if(e.getSource().equals(dodaj)){
                 resultFieldText += "+";
@@ -170,12 +176,12 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
             result.setText(resultFieldText);
         } else System.out.println("Blad znaku");
         }
-    void stringBuilder(int charAt, JButton button){
+    void stringBuilder(int charAt, String text){
         if(DMactivated){
-            resultFieldText+=button.getText().toUpperCase().charAt(charAt);
+            resultFieldText+=text.toUpperCase().charAt(charAt);
         }
         else {
-            resultFieldText+=button.getText().charAt(charAt);
+            resultFieldText+=text.charAt(charAt);
         }
         StringBuilder sb1 = new StringBuilder(resultFieldText);
         sb1.deleteCharAt(resultFieldText.length()-2);
@@ -188,9 +194,7 @@ class Methods{
         String finalResult;
         ArrayList<Character> signs = new ArrayList<>();
         ArrayList<String> list = new ArrayList<>();
-        System.out.println("Wyniki");
         int k=operators;
-        System.out.println(k);
         int i=0;
         while(k!=0){
                 if(resultString.charAt(i)=='+'){
@@ -215,8 +219,6 @@ class Methods{
             i++;
         }
         list.add(resultString);
-        for(String element: list) System.out.println(element);
-        for(Character element: signs) System.out.println(element);
         for(Character element: signs){
             if(element=='+'){
                 finalResult = list.get(0)+list.get(1);
@@ -232,7 +234,6 @@ class Methods{
                 list.set(0,finalResult);
             }
         }
-        for(String element: list) System.out.println(element);
         return list.get(0);
     }
     public static String podziel(String x, String y) {
