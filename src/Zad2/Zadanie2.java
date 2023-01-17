@@ -22,7 +22,7 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
     private JButton mno = new JButton("mno");
     private JButton pqr = new JButton("pqr");
     private JButton stuv = new JButton("stuv");
-    private JButton wxyz = new JButton("wxyz"); // niech clicker dzieli przez x znakow w zlaenosci od buttona
+    private JButton wxyz = new JButton("wxyz");
     private JButton dmSwitch = new JButton("D/M");
     private JButton clearSign = new JButton("CE");
     private JButton clear = new JButton("C");
@@ -35,7 +35,6 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
     private boolean DMactivated = false;
     private int operators = 0;
     private boolean nextResult = false;
-    private boolean goOn;
     MyFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600,850);
@@ -97,7 +96,7 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
         add(panel);
         result.setBounds(90,10,420,80);
         result.setEditable(false);
-        result.setFont(new Font("Serif", Font.ITALIC, 18));
+        result.setFont(new Font("Serif", Font.ROMAN_BASELINE, 18));
         add(result);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -107,8 +106,12 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(nextResult){
-            resultFieldText = "";
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) { // kod przy mouseClicked nie dzialal poprawnie, przycisk nacisniety powodowal reakcje w kolejnym nacisnietym
+        if(nextResult){                      // co skutkowalo niepoprawnym dodawaniu znakow. mousePressed dziala przy zwyklym przycisnieciu przycisku myszki
+            resultFieldText = "";            // dzieki czemu "klikniecia" nie przechodza do kolejnych przyciskow
             nextResult = false;
         }
         JButton button = (JButton) e.getSource();
@@ -138,12 +141,10 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
             case (3):
                 stringBuilder(3,buttonText);
                 break;
+            default:
+                resultFieldText+=buttonText.charAt(0);
         }
         result.setText(resultFieldText);
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
     }
 
     @Override
@@ -236,14 +237,14 @@ class Methods{
         }
         return list.get(0);
     }
-    public static String podziel(String x, String y) {
-        int m = x.length();
-        int n = y.length();
+    public static String podziel(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
         int[][] Table = new int[m + 1][n + 1];
         int maxLength = 0;
         int maxRow = 0;
         // Tabela do porownywania liter stringow
-        // Kazdy rowny znak uzyskuje wynik LiczbaPoPrzekatnejWgore + 1 dzieki czemu znajdujemy dlugosci najdluzszych wspolnych ciagow znakow (LCS problem)
+        // Kazdy rowny znak uzyskuje wynik LiczbaPoPrzekatnejPoLewej + 1 dzieki czemu znajdujemy dlugosci najdluzszych wspolnych ciagow znakow (LCS problem)
         // Jednoczesnie zapisujemy numer wiersza ktory reprezentuje najdluzszy znaleziony ciag
         for (int i = 0; i < m; i++) {
             Table[i][0] = 0;
@@ -253,7 +254,7 @@ class Methods{
         }
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
-                if (x.charAt(i - 1) == y.charAt(j - 1)) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
                     Table[i][j] = 1 + Table[i - 1][j - 1];
                     if (maxLength < Table[i][j]) {
                         maxLength = Table[i][j];
@@ -266,7 +267,7 @@ class Methods{
         }
         StringBuilder LCS = new StringBuilder(maxLength); //Longest Common String
         while (maxLength > 0) {
-            LCS.append(x.charAt(maxRow - 1));
+            LCS.append(word1.charAt(maxRow - 1));
             maxRow--;
             maxLength--;
         }

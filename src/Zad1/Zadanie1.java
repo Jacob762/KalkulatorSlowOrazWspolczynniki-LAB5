@@ -1,6 +1,8 @@
 package Zad1;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ class MyFrame extends JFrame {
     public static List<JTextField> cFields = Methods.init_Fields('c',4);;
     public static JTextField sign = new JTextField();
     public JButton solve = new JButton("Rozwiaz");
-    public JTextField result = new JTextField();
+    boolean solveClicked = false;
     MyFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1200,800);
@@ -26,23 +28,34 @@ class MyFrame extends JFrame {
         addField(bFields,400,270);
         add(new JLabel("Wspolczynniki b")).setBounds(280,280,120,40);
         addField(cFields,400,340);
+        DocumentListener documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {operate();}
+            @Override
+            public void removeUpdate(DocumentEvent e) {operate();}
+            @Override
+            public void changedUpdate(DocumentEvent e) {operate();}
+        };
+        for(int i=0;i<aFields.size();i++){
+            aFields.get(i).getDocument().addDocumentListener(documentListener);
+            bFields.get(i).getDocument().addDocumentListener(documentListener);
+        }
+        for(JTextField element : cFields) element.setEditable(false);
         add(new JLabel("Wspolczynniki c")).setBounds(280,350,120,40);
         sign.setBounds(430,410,120,60);
+        sign.getDocument().addDocumentListener(documentListener);
         add(sign);
         add(new JLabel("Znak i przycisk")).setBounds(310,420,120,40);
         solve.setBounds(560,410,120,60);
         solve.addActionListener(e -> {
             try{
                 Methods.calculateProducts(cFields);
+                solveClicked = true;
             } catch (NumberFormatException ex){
                 System.out.println("Wrong input");
             }
         });
         add(solve);
-        add(new JLabel("Wynik")).setBounds(400,490,120,40);
-        result.setBounds(450,480,200,60);
-        result.setEditable(false);
-        add(result);
         setLocationRelativeTo(null);
         setResizable(false);
         setLayout(null);
@@ -56,8 +69,15 @@ class MyFrame extends JFrame {
             i+=100;
         }
     }
-
-
+    public void operate(){
+        if(solveClicked){
+            try{
+                Methods.calculateProducts(cFields);
+            } catch (NumberFormatException ex){
+                System.out.println("Wrong input");
+            }
+        }
+    }
 }
 
 class Methods{
@@ -91,29 +111,18 @@ class Methods{
        return result;
     }
     public static void calculateProducts(List<JTextField> list){
-        List<Integer> products = new ArrayList<>();
-        List<Boolean> isNumber = new ArrayList<>();
-        List<String> notNumbers = new ArrayList<>();
-        List<Integer> finalAns = new ArrayList<>();
-        for(int i=0;i<list.size();i++){
-            try {
-                products.add((int) (Integer.parseInt(list.get(i).getText())*Math.pow(10,3-i)));
-                isNumber.add(true);
-                notNumbers.add("");
-                System.out.println(products.get(i));
-            } catch (NumberFormatException e){
-                products.add(0);
-                isNumber.add(false);
-                notNumbers.add(list.get(i).getText());
-                System.out.println(notNumbers.get(i));
-            }
-        }
         int factor = calculateFactor();
-        for(int i=0;i<products.size();i++){
-            if(isNumber.get(i)) factor-=products.get(i);
+        Integer[] results = new Integer[4];
+        for(int i=3;i>0;i--){
+            results[i] = factor% (int) Math.pow(10,4-i); //dzielimy wynik na liczbe jednosci, dziesiatek i setek
+            factor-=results[i];
         }
-
-        System.out.println(factor);
+        results[0] = factor/1000; // wynik po odjeciu setek, dziesiatek i jednosci podzielony przez 1000 da nam liczbe tysiecy
+        for(int i=1;i<4;i++){
+            results[i] =  results[i]/ (int) Math.pow(10,3-i); // wyniki po kolei dzielimy przez liczbe towarzyszaca im w rownaniu
+            list.get(i).setText(String.valueOf(results[i]));
+        }
+        list.get(0).setText(String.valueOf(results[0]));
     }
     public static int load(List<JTextField> list){
         int factor=0;
