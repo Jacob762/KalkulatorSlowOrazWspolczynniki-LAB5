@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ec934bf-12f8-48fb-98a6-43c72bc95ba9" name="Changes" comment="Dodano:&#10;- zad1 i zad2&#10;TO-DO&#10;- logika zad1&#10;- BugFixy zad2">
+    <list default="true" id="4ec934bf-12f8-48fb-98a6-43c72bc95ba9" name="Changes" comment="Dodano:&#10;- logika zad1&#10;- BugFixy zad2&#10;TO-DO&#10;- zdać...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Zad1/Zadanie1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Zad1/Zadanie1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Zad2/Zadanie2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Zad2/Zadanie2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +42,7 @@
       <recent name="Zad1" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Zadanie1">
+  <component name="RunManager" selected="Application.Zadanie2">
     <configuration name="Zadanie1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Zad1.Zadanie1" />
       <module name="LAB5" />
@@ -72,8 +71,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Zadanie1" />
         <item itemvalue="Application.Zadanie2" />
+        <item itemvalue="Application.Zadanie1" />
       </list>
     </recent_temporary>
   </component>
@@ -97,7 +96,8 @@
       <workItem from="1673891572681" duration="797000" />
       <workItem from="1673909381590" duration="4888000" />
       <workItem from="1673951254232" duration="917000" />
-      <workItem from="1673989717543" duration="316000" />
+      <workItem from="1673989717543" duration="394000" />
+      <workItem from="1674032382260" duration="97000" />
     </task>
     <task id="LOCAL-00001" summary="Dodano:&#10;- zad1 i zad2&#10;TO-DO&#10;- logika zad1&#10;- BugFixy zad2">
       <created>1673785100492</created>
@@ -113,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673869586288</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Dodano:&#10;- logika zad1&#10;- BugFixy zad2&#10;TO-DO&#10;- zdać...">
+      <created>1673990106455</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1673990106455</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +139,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Dodano:&#10;- zad1 i zad2&#10;TO-DO&#10;- logika zad1&#10;- BugFixy zad2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodano:&#10;- zad1 i zad2&#10;TO-DO&#10;- logika zad1&#10;- BugFixy zad2" />
+    <MESSAGE value="Dodano:&#10;- logika zad1&#10;- BugFixy zad2&#10;TO-DO&#10;- zdać..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodano:&#10;- logika zad1&#10;- BugFixy zad2&#10;TO-DO&#10;- zdać..." />
   </component>
 </project>

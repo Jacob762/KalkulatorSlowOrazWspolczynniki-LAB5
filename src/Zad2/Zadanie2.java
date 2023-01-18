@@ -96,7 +96,7 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
         add(panel);
         result.setBounds(90,10,420,80);
         result.setEditable(false);
-        result.setFont(new Font("Serif", Font.ROMAN_BASELINE, 18));
+        result.setFont(new Font("Serif", Font.PLAIN, 18));
         add(result);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -116,33 +116,35 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
         }
         JButton button = (JButton) e.getSource();
         String buttonText = button.getText();
-        int clickCounter = e.getClickCount()-1;
-        System.out.println(clickCounter);
-        switch (clickCounter%buttonText.length()){
-            case (0):
-                if(clickCounter>2){
-                    StringBuilder stringBuilder;
-                    stringBuilder = new StringBuilder(resultFieldText);
-                    stringBuilder.deleteCharAt(resultFieldText.length()-1);
-                    resultFieldText = stringBuilder.toString();
-                }
-                if(DMactivated){
-                    resultFieldText+=buttonText.toUpperCase().charAt(0);
-                }else{
+        if(e.getButton()==MouseEvent.BUTTON1){ //zabezpieczenie przed klikaniem prawym przyciskiem
+            int clickCounter = e.getClickCount()-1;
+            System.out.println(clickCounter);
+            switch (clickCounter%buttonText.length()){
+                case (0):
+                    if(clickCounter>2){
+                        StringBuilder stringBuilder;
+                        stringBuilder = new StringBuilder(resultFieldText);
+                        stringBuilder.deleteCharAt(resultFieldText.length()-1);
+                        resultFieldText = stringBuilder.toString();
+                    }
+                    if(DMactivated){
+                        resultFieldText+=buttonText.toUpperCase().charAt(0);
+                    }else{
+                        resultFieldText+=buttonText.charAt(0);
+                    }
+                    break;
+                case (1):
+                    stringBuilder(1,buttonText);
+                    break;
+                case (2):
+                    stringBuilder(2,buttonText);
+                    break;
+                case (3):
+                    stringBuilder(3,buttonText);
+                    break;
+                default:
                     resultFieldText+=buttonText.charAt(0);
-                }
-                break;
-            case (1):
-                stringBuilder(1,buttonText);
-                break;
-            case (2):
-                stringBuilder(2,buttonText);
-                break;
-            case (3):
-                stringBuilder(3,buttonText);
-                break;
-            default:
-                resultFieldText+=buttonText.charAt(0);
+            }
         }
         result.setText(resultFieldText);
     }
@@ -176,7 +178,7 @@ class MyFrame extends JFrame implements MouseListener,ActionListener {
             operators++;
             result.setText(resultFieldText);
         } else System.out.println("Blad znaku");
-        }
+    }
     void stringBuilder(int charAt, String text){
         if(DMactivated){
             resultFieldText+=text.toUpperCase().charAt(charAt);
@@ -198,25 +200,25 @@ class Methods{
         int k=operators;
         int i=0;
         while(k!=0){
-                if(resultString.charAt(i)=='+'){
-                    list.add(resultString.substring(0,i));
-                    resultString = resultString.substring(i+1);
-                    k--;
-                    signs.add('+');
-                    i=0;
-                } else if (resultString.charAt(i)=='-'){
-                    list.add(resultString.substring(0,i));
-                    resultString = resultString.substring(i+1);
-                    k--;
-                    signs.add('-');
-                    i=0;
-                } else if (resultString.charAt(i)=='/'){
-                    list.add(resultString.substring(0,i));
-                    resultString = resultString.substring(i+1);
-                    k--;
-                    signs.add('/');
-                    i=0;
-                }
+            if(resultString.charAt(i)=='+'){
+                list.add(resultString.substring(0,i));
+                resultString = resultString.substring(i+1);
+                k--;
+                signs.add('+');
+                i=0;
+            } else if (resultString.charAt(i)=='-'){
+                list.add(resultString.substring(0,i));
+                resultString = resultString.substring(i+1);
+                k--;
+                signs.add('-');
+                i=0;
+            } else if (resultString.charAt(i)=='/'){
+                list.add(resultString.substring(0,i));
+                resultString = resultString.substring(i+1);
+                k--;
+                signs.add('/');
+                i=0;
+            }
             i++;
         }
         list.add(resultString);
